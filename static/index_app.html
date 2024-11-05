@@ -38,20 +38,6 @@
             background: white;
         }
 
-        /* Скрываем элементы управления Figma */
-        iframe {
-            pointer-events: none;
-        }
-        iframe::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: auto;
-        }
-
         @media (max-width: 768px) {
             iframe {
                 width: 100%;
@@ -97,13 +83,6 @@
             // Вызываем функцию при загрузке и изменении размера окна
             window.addEventListener('resize', resizeIframe);
             resizeIframe();
-
-            // Добавляем параметр для скрытия UI Figma
-            const iframe = document.getElementById('figma-frame');
-            const currentSrc = iframe.src;
-            if (!currentSrc.includes('hide-ui=1')) {
-                iframe.src = currentSrc + (currentSrc.includes('?') ? '&' : '?') + 'hide-ui=1';
-            }
         });
     </script>
 </body>
