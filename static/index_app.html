@@ -29,60 +29,58 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background: white;
         }
         
         iframe {
-            width: 100vw;
-            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border: none;
-            background: white;
-        }
-
-        @media (max-width: 768px) {
-            iframe {
-                width: 100%;
-                height: 100%;
-            }
         }
     </style>
 </head>
 <body>
     <div id="container">
         <iframe 
-            id="figma-frame"
-            src="https://embed.figma.com/proto/T9LISapjTIZdcZfyf6JPCq/Prizo?page-id=0%3A1&node-id=1-323&node-type=frame&viewport=979%2C359%2C0.21&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A725&embed-host=share&hide-ui=1"
+            src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FT9LISapjTIZdcZfyf6JPCq%2FPrizo%3Ftype%3Ddesign%26node-id%3D1-323%26t%3DHG3EDu5frgLhGe7P-0%26scaling%3Dscale-down%26page-id%3D0%253A1%26starting-point-node-id%3D1%253A725"
             allowfullscreen
+            allow="fullscreen"
         ></iframe>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Инициализация Telegram WebApp
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
                 window.Telegram.WebApp.expand();
+                
+                // Устанавливаем цвет фона в соответствии с темой Telegram
+                document.body.style.backgroundColor = window.Telegram.WebApp.backgroundColor;
             }
-
-            // Адаптивное масштабирование iframe
-            function resizeIframe() {
-                const iframe = document.getElementById('figma-frame');
+            
+            // Обработка изменения размера окна
+            function handleResize() {
                 const container = document.getElementById('container');
-                const windowRatio = window.innerWidth / window.innerHeight;
-                const designRatio = 375 / 812; // Стандартное соотношение сторон для мобильного дизайна
-
-                if (windowRatio > designRatio) {
-                    // Если окно шире, чем нужно
-                    iframe.style.height = '100%';
-                    iframe.style.width = 'auto';
-                } else {
-                    // Если окно уже, чем нужно
-                    iframe.style.width = '100%';
-                    iframe.style.height = 'auto';
-                }
+                const iframe = container.querySelector('iframe');
+                
+                // Получаем размеры окна
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+                
+                // Устанавливаем размеры контейнера
+                container.style.width = windowWidth + 'px';
+                container.style.height = windowHeight + 'px';
+                
+                // Устанавливаем размеры iframe
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
             }
 
             // Вызываем функцию при загрузке и изменении размера окна
-            window.addEventListener('resize', resizeIframe);
-            resizeIframe();
+            window.addEventListener('resize', handleResize);
+            handleResize();
         });
     </script>
 </body>
