@@ -16,6 +16,7 @@
             height: 100%;
             width: 100%;
             overflow: hidden;
+            background-color: #fff;
         }
         
         #container {
@@ -25,12 +26,23 @@
             right: 0;
             bottom: 0;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+            width: 100vw;
+            height: 100vh;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            iframe {
+                width: 100%;
+                height: 100%;
+            }
         }
     </style>
 </head>
@@ -38,7 +50,7 @@
     <div id="container">
         <iframe 
             id="figma-frame"
-            src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FT9LISapjTIZdcZfyf6JPCq%2FPrizo%3Fnode-id%3D1-725%26node-type%3Dframe%26viewport%3D979%252C359%252C0.21%26t%3DHG3EDu5frgLhGe7P-0%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26starting-point-node-id%3D1%253A725"
+            src="https://embed.figma.com/proto/T9LISapjTIZdcZfyf6JPCq/Prizo?page-id=0%3A1&node-id=1-323&node-type=frame&viewport=979%2C359%2C0.21&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A725&embed-host=share"
             allowfullscreen
         ></iframe>
     </div>
@@ -49,6 +61,28 @@
                 window.Telegram.WebApp.ready();
                 window.Telegram.WebApp.expand();
             }
+
+            // Адаптивное масштабирование iframe
+            function resizeIframe() {
+                const iframe = document.getElementById('figma-frame');
+                const container = document.getElementById('container');
+                const windowRatio = window.innerWidth / window.innerHeight;
+                const designRatio = 375 / 812; // Стандартное соотношение сторон для мобильного дизайна
+
+                if (windowRatio > designRatio) {
+                    // Если окно шире, чем нужно
+                    iframe.style.height = '100%';
+                    iframe.style.width = 'auto';
+                } else {
+                    // Если окно уже, чем нужно
+                    iframe.style.width = '100%';
+                    iframe.style.height = 'auto';
+                }
+            }
+
+            // Вызываем функцию при загрузке и изменении размера окна
+            window.addEventListener('resize', resizeIframe);
+            resizeIframe();
         });
     </script>
 </body>
