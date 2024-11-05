@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
         }
         
         html, body {
@@ -17,6 +18,8 @@
             width: 100%;
             overflow: hidden;
             background-color: #fff;
+            position: fixed;
+            touch-action: none;
         }
         
         #container {
@@ -30,6 +33,8 @@
             justify-content: center;
             align-items: center;
             background: white;
+            touch-action: none;
+            -webkit-overflow-scrolling: none;
         }
         
         iframe {
@@ -39,6 +44,19 @@
             width: 100%;
             height: 100%;
             border: none;
+            overflow: hidden;
+            -webkit-overflow-scrolling: touch;
+            touch-action: none;
+        }
+
+        /* Убираем скроллбары для всех элементов */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        * {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -48,6 +66,7 @@
             src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FT9LISapjTIZdcZfyf6JPCq%2FPrizo%3Ftype%3Ddesign%26node-id%3D1-323%26t%3DHG3EDu5frgLhGe7P-0%26scaling%3Dscale-down%26page-id%3D0%253A1%26starting-point-node-id%3D1%253A725"
             allowfullscreen
             allow="fullscreen"
+            scrolling="no"
         ></iframe>
     </div>
     <script>
@@ -59,6 +78,11 @@
                 // Устанавливаем цвет фона в соответствии с темой Telegram
                 document.body.style.backgroundColor = window.Telegram.WebApp.backgroundColor;
             }
+            
+            // Предотвращаем скролл на мобильных устройствах
+            document.body.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, { passive: false });
             
             // Обработка изменения размера окна
             function handleResize() {
